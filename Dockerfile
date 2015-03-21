@@ -7,7 +7,7 @@ RUN ["apt-get", "update"]
 RUN ["apt-get", "install", "software-properties-common", "python-software-properties", "-y"]
 RUN ["apt-get", "install", "wget", "-y"]
 
-# Install Java.
+# Install Java
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
@@ -33,11 +33,12 @@ RUN ["rm", "-rf", "/home/subsonic/subsonic-5.2.1-standalone.tar.gz"]
 RUN ["mkdir", "-p", "/var/subsonic"]
 RUN ["chown", "-R", "subsonic:subsonic", "/var/subsonic"]
 
-# Mount data directory
+# Mount data dir
 RUN ["mkdir", "/data_subsonic"]
 RUN ["chown", "-R", "subsonic:subsonic", "/data_subsonic"]
 VOLUME /data_subsonic:/data_subsonic
 
+# Setup home dir
 RUN ["chown", "-R", "subsonic:subsonic", "/home/subsonic"]
 EXPOSE 4040
 WORKDIR /home/subsonic/subsonic
