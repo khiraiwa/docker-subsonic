@@ -29,10 +29,6 @@ RUN wget -O /home/subsonic/subsonic-5.2.1-standalone.tar.gz http://downloads.sou
 RUN ["tar", "xfz", "/home/subsonic/subsonic-5.2.1-standalone.tar.gz", "-C", "/home/subsonic/subsonic"]
 RUN ["rm", "-rf", "/home/subsonic/subsonic-5.2.1-standalone.tar.gz"]
 
-# Setup log dir
-RUN ["mkdir", "-p", "/var/subsonic"]
-RUN ["chown", "-R", "subsonic:subsonic", "/var/subsonic"]
-
 # Mount data dir
 RUN ["mkdir", "/data_subsonic"]
 RUN ["chown", "-R", "subsonic:subsonic", "/data_subsonic"]
@@ -50,4 +46,4 @@ RUN sed -i -e"s/SUBSONIC_DEFAULT_PODCAST_FOLDER=\/var\/music\Podcast/SUBSONIC_DE
 RUN sed -i -e"s/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/var\/playlists/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/data_subsonic\/playlists/" /home/subsonic/subsonic/subsonic.sh
 
 CMD /home/subsonic/subsonic/subsonic.sh && \
-  tail -100f /var/subsonic/subsonic_sh.log
+  tail -100f /home/subsonic/subsonic/subsonic_sh.log
