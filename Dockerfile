@@ -37,8 +37,6 @@ VOLUME /data_subsonic:/data_subsonic
 # Setup home dir
 RUN ["chown", "-R", "subsonic:subsonic", "/home/subsonic"]
 EXPOSE 4040
-WORKDIR /home/subsonic/subsonic
-USER subsonic
 
 RUN locale-gen en_US.UTF-8  
 ENV LANG en_US.UTF-8  
@@ -50,5 +48,7 @@ RUN sed -i -e"s/SUBSONIC_DEFAULT_MUSIC_FOLDER=\/var\/music/SUBSONIC_DEFAULT_MUSI
 RUN sed -i -e"s/SUBSONIC_DEFAULT_PODCAST_FOLDER=\/var\/music\Podcast/SUBSONIC_DEFAULT_MUSIC_FOLDER=\/data_subsonic\/music\Podcast/" /home/subsonic/subsonic/subsonic.sh
 RUN sed -i -e"s/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/var\/playlists/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/data_subsonic\/playlists/" /home/subsonic/subsonic/subsonic.sh
 
+WORKDIR /home/subsonic/subsonic
+USER subsonic
 CMD /home/subsonic/subsonic/subsonic.sh && \
   tail -100f /home/subsonic/subsonic/subsonic_sh.log
