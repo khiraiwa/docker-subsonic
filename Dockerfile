@@ -43,7 +43,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8
 
-RUN sed -i -e"s/SUBSONIC_HOME=\/var\/subsonic/SUBSONIC_HOME=\/home\/subsonic\/subsonic/" /home/subsonic/subsonic/subsonic.sh
+RUN sed -i -e"s/SUBSONIC_HOME=\/var\/subsonic/SUBSONIC_HOME=\/data_subsonic/" /home/subsonic/subsonic/subsonic.sh
 RUN sed -i -e"s/SUBSONIC_DEFAULT_MUSIC_FOLDER=\/var\/music/SUBSONIC_DEFAULT_MUSIC_FOLDER=\/data_subsonic\/music/" /home/subsonic/subsonic/subsonic.sh
 RUN sed -i -e"s/SUBSONIC_DEFAULT_PODCAST_FOLDER=\/var\/music\Podcast/SUBSONIC_DEFAULT_MUSIC_FOLDER=\/data_subsonic\/music\Podcast/" /home/subsonic/subsonic/subsonic.sh
 RUN sed -i -e"s/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/var\/playlists/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/data_subsonic\/playlists/" /home/subsonic/subsonic/subsonic.sh
