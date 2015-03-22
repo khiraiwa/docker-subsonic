@@ -51,4 +51,4 @@ RUN sed -i -e"s/SUBSONIC_DEFAULT_PLAYLIST_FOLDER=\/var\/playlists/SUBSONIC_DEFAU
 WORKDIR /home/subsonic/subsonic
 USER subsonic
 CMD /home/subsonic/subsonic/subsonic.sh && \
-  tail -100f /home/subsonic/subsonic/subsonic_sh.log
+  tail -100f /data_subsonic/subsonic_sh.log
