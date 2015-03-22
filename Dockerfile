@@ -32,7 +32,7 @@ RUN ["rm", "-rf", "/home/subsonic/subsonic-5.2.1-standalone.tar.gz"]
 # Mount data dir
 RUN ["mkdir", "/data_subsonic"]
 RUN ["chown", "-R", "subsonic:subsonic", "/data_subsonic"]
-VOLUME /data_subsonic:/data_subsonic
+VOLUME ["/data_subsonic"]
 
 # Setup home dir
 RUN ["chown", "-R", "subsonic:subsonic", "/home/subsonic"]
