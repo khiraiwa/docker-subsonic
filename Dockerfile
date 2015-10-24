@@ -2,7 +2,7 @@ FROM ubuntu:14.04.2
 
 MAINTAINER khiraiwa
 
-# Install Java
+# Install Java, ffmpeg
 RUN \
   apt-get update && \
   apt-get install software-properties-common python-software-properties wget -y && \
