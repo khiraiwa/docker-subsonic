@@ -34,7 +34,7 @@ RUN \
   chown -R subsonic:subsonic /home/subsonic
 VOLUME ["/data_subsonic"]
 
-ENV locale-gen en_US.UTF-8  
+RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8
