@@ -2,6 +2,8 @@ FROM ubuntu:14.04.2
 
 MAINTAINER khiraiwa
 
+ENV SUBSONIC_VERSION 5.3
+
 # Install Java, ffmpeg
 RUN \
   apt-get update && \
@@ -23,9 +25,9 @@ RUN \
 
 # Download subsonic-standalone
 RUN \
-  wget -O /home/subsonic/subsonic-5.2.1-standalone.tar.gz http://downloads.sourceforge.net/project/subsonic/subsonic/5.2.1/subsonic-5.2.1-standalone.tar.gz?r=http%3A%2F%2Fwww.subsonic.org%2Fpages%2Fdownload2.jsp%3Ftarget%3Dsubsonic-5.2.1-standalone.tar.gz\ts=1426611188\use_mirror=jaist && \
-  tar xfz /home/subsonic/subsonic-5.2.1-standalone.tar.gz -C /home/subsonic/subsonic && \
-  rm -rf /home/subsonic/subsonic-5.2.1-standalone.tar.gz
+  wget -O /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz http://subsonic.org/download/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz && \
+  tar xfz /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz -C /home/subsonic/subsonic && \
+  rm -rf /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz
 
 # Mount data dir and setup home dir
 RUN \
