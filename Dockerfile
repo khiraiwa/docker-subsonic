@@ -2,7 +2,7 @@ FROM ubuntu:14.04.2
 
 MAINTAINER khiraiwa
 
-ENV SUBSONIC_VERSION 5.3
+ENV SUBSONIC_VERSION 6.0
 
 # Install Java, ffmpeg
 RUN \
