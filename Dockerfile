@@ -2,7 +2,7 @@ FROM ubuntu:14.04.2
 
 MAINTAINER khiraiwa
 
-ENV SUBSONIC_VERSION 6.0
+ENV SUBSONIC_VERSION 6.1.1
 
 # Install Java, ffmpeg
 RUN \
@@ -25,7 +25,7 @@ RUN \
 
 # Download subsonic-standalone
 RUN \
-  wget -O /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz http://subsonic.org/download/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz && \
+  wget -O /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz && \
   tar xfz /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz -C /home/subsonic/subsonic && \
   rm -rf /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz
 
