@@ -1,58 +1,44 @@
-FROM ubuntu:14.04.2
+FROM alpine:latest as downloader
 
-MAINTAINER khiraiwa
+ENV SUBSONIC_VERSION 6.1.3
 
-ENV SUBSONIC_VERSION 6.1.1
-
-# Install Java, ffmpeg
-RUN \
-  apt-get update && \
-  apt-get install software-properties-common python-software-properties wget -y && \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  add-apt-repository -y ppa:mc3man/trusty-media && \
-  apt-get update && \
-  apt-get install -y oracle-java8-installer ffmpeg && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk8-installer
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
-
-# Add subsonic user
-RUN \
-  mkdir -p /home/subsonic/subsonic && \
-  groupadd -r subsonic && useradd -r -d /home/subsonic -s /bin/bash -g subsonic subsonic && \
-  echo 'subsonic ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN apk --no-cache add wget ca-certificates ffmpeg && \
+  update-ca-certificates
 
 # Download subsonic-standalone
-RUN \
-  wget -O /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz && \
-  tar xfz /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz -C /home/subsonic/subsonic && \
-  rm -rf /home/subsonic/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz
+RUN mkdir -p /opt/subsonic && \
+  wget -O /opt/subsonic.tar.gz \
+  https://s3-eu-west-1.amazonaws.com/subsonic-public/download/subsonic-${SUBSONIC_VERSION}-standalone.tar.gz && \
+  tar xfz /opt/subsonic.tar.gz -C /opt/subsonic && \
+  rm -rf /opt/subsonic.tar.gz
 
-# Mount data dir and setup home dir
-RUN \
-  mkdir /data_subsonic && \
-  chown -R subsonic:subsonic /data_subsonic && \
-  chown -R subsonic:subsonic /home/subsonic
-VOLUME ["/data_subsonic"]
+FROM java:8-jre-alpine
 
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
+MAINTAINER khiraiwa <the.world.nova@gmail.com>
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV SUBSONIC_HOME "/data_subsonic"
 ENV SUBSONIC_DEFAULT_MUSIC_FOLDER "/data_subsonic/music"
 ENV SUBSONIC_DEFAULT_PODCAST_FOLDER "/data_subsonic/music/Podcast"
 ENV SUBSONIC_DEFAULT_PLAYLIST_FOLDER "/data_subsonic/playlists"
 
-# Setup Subsonic settings
-RUN \
-  mkdir -p /data_subsonic/transcode && \
+VOLUME ["/data_subsonic"]
+
+# Install ffmpeg, root certificates
+RUN apk --no-cache add ffmpeg ca-certificates && \
+    update-ca-certificates
+
+RUN mkdir -p /data_subsonic/transcode && \
   ln -s /usr/bin/ffmpeg /data_subsonic/transcode/ffmpeg
 
-WORKDIR /home/subsonic/subsonic
-USER subsonic
+WORKDIR /root/
 EXPOSE 4040
 
-CMD /home/subsonic/subsonic/subsonic.sh && \
-  tail -100f /data_subsonic/subsonic_sh.log
+COPY --from=downloader /opt/subsonic/subsonic-booter-jar-with-dependencies.jar \
+     /opt/subsonic/subsonic.war /opt/subsonic/subsonic.sh ./
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD ["help"]

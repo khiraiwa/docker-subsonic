@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+  test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: echo "Nothing."
+  deploy:
+    machine:
+      enabled: true
+    environment:
+      - DOCKER_REPO: khiraiwa/docker-subsonic
+    steps:
+      - run:
+          name: Set docker credential
+          command: sed "s/<AUTH>/$DOCKER_AUTH/" < dockercfg.template > ~/.dockercfg
+      - run:
+          name: Deploy
+          command: docker push ${DOCKER_REPO}
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
