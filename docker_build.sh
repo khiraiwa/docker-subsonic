@@ -9,7 +9,7 @@ cd -- "$DIR"
 
 DOCKER_TAG="${DOCKER_REPO}"
 
-docker build --tag="$DOCKER_TAG" .
+docker build --tag="$DOCKER_TAG" "$@" .
 
 # And tag it with the version number
 docker tag "$DOCKER_TAG" "$DOCKER_TAG:$TAG_VERSION"
