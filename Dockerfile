@@ -16,13 +16,14 @@ FROM java:8-jre-alpine
 
 MAINTAINER khiraiwa <the.world.nova@gmail.com>
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-ENV SUBSONIC_HOME "/data_subsonic"
-ENV SUBSONIC_DEFAULT_MUSIC_FOLDER "/data_subsonic/music"
-ENV SUBSONIC_DEFAULT_PODCAST_FOLDER "/data_subsonic/music/Podcast"
-ENV SUBSONIC_DEFAULT_PLAYLIST_FOLDER "/data_subsonic/playlists"
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    LC_CTYPE=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    SUBSONIC_HOME="/data_subsonic" \
+    SUBSONIC_DEFAULT_MUSIC_FOLDER="/data_subsonic/music" \
+    SUBSONIC_DEFAULT_PODCAST_FOLDER="/data_subsonic/music/Podcast" \
+    SUBSONIC_DEFAULT_PLAYLIST_FOLDER="/data_subsonic/playlists"
 
 VOLUME ["/data_subsonic"]
 
