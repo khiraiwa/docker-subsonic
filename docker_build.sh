@@ -7,6 +7,8 @@ cd -- "$DIR"
 
 . getversion.sh
 
+echo "docker tagversion ${TAG_VERSION}"
+
 DOCKER_TAG="${DOCKER_REPO}"
 
 docker build --tag="$DOCKER_TAG" "$@" .
