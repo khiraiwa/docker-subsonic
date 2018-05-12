@@ -33,6 +33,9 @@ jobs:
           name: Set docker credential
           command: sed "s/<AUTH>/$DOCKER_AUTH/" < dockercfg.template > ~/.dockercfg
       - run:
+          name: Set docker credential
+          command: cat ~/.dockercfg
+      - run:
           name: Deploy
           command: docker push ${DOCKER_REPO}
 
