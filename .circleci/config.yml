@@ -31,7 +31,7 @@ jobs:
           command: ./docker_build.sh
       - run:
           name: Set docker credential
-          command: sed "s/<AUTH>/$DOCKER_AUTH/" < dockercfg.template > ~/.dockercfg
+          command: sed "s/<EMAIL>/$DOCKER_EMAIL/;s/<AUTH>/$DOCKER_AUTH/" < dockercfg.template > ~/.dockercfg
       - run:
           name: Set docker credential
           command: cat ~/.dockercfg
