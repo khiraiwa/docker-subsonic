@@ -12,7 +12,9 @@ export SUBSONIC_DEFAULT_PODCAST_FOLDER="/data_subsonic/music/Podcast"
 export SUBSONIC_DEFAULT_PLAYLIST_FOLDER="/data_subsonic/playlists"
 
 mkdir -p /data_subsonic/transcode
-ln -s /usr/bin/ffmpeg /data_subsonic/transcode/ffmpeg
+if [ ! -e "/data_subsonic/transcode/ffmpeg" ]; then
+    ln -s /usr/bin/ffmpeg /data_subsonic/transcode/ffmpeg
+fi
 
 case "$1" in
     subsonic)
