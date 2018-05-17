@@ -19,7 +19,7 @@ fi
 case "$1" in
     subsonic)
         /root/subsonic.sh
-        while [ ! -e "/data_subsonic/subsonic_sh.log" ]; do sleep 1s; done
+        while [ ! -e "/root/subsonic_sh.log" ]; do sleep 1s; done
         tail -f /data_subsonic/subsonic_sh.log
         exit 0
         ;;
