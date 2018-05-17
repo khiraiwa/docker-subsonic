@@ -11,16 +11,14 @@ export SUBSONIC_DEFAULT_MUSIC_FOLDER="/data_subsonic/music"
 export SUBSONIC_DEFAULT_PODCAST_FOLDER="/data_subsonic/music/Podcast"
 export SUBSONIC_DEFAULT_PLAYLIST_FOLDER="/data_subsonic/playlists"
 
-mkdir -p /data_subsonic/transcode
-if [ ! -e "/data_subsonic/transcode/ffmpeg" ]; then
-    ln -s /usr/bin/ffmpeg /data_subsonic/transcode/ffmpeg
-fi
+mkdir -p /root/transcode
+ln -s /usr/bin/ffmpeg /root/transcode/ffmpeg
 
 case "$1" in
     subsonic)
         /root/subsonic.sh
         while [ ! -e "/root/subsonic_sh.log" ]; do sleep 1s; done
-        tail -f /data_subsonic/subsonic_sh.log
+        tail -f /root/subsonic_sh.log
         exit 0
         ;;
 
